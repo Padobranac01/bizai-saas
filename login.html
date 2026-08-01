@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -25,10 +27,12 @@
 </header>
 
 
+
 <section class="hero">
 
 
 <h2>Uloguj se</h2>
+
 
 
 <input 
@@ -52,46 +56,121 @@ id="lozinka"
 
 
 <button onclick="prijava()">
+
 Prijavi se
+
 </button>
+
 
 
 <p id="poruka"></p>
 
 
+
 <p>
 Nemaš nalog?
-Registracija uskoro.
+<a href="register.html">Registruj se</a>
 </p>
+
 
 
 </section>
 
 
+
+
+
 <script>
 
-function prijava(){
 
-let email = document.getElementById("email").value;
-let lozinka = document.getElementById("lozinka").value;
+const SUPABASE_URL = "https://xczrbbjgayruabttxnyx.supabase.co";
+
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
+
+
+const supabaseClient = supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+
+
+async function prijava(){
+
+
+let email =
+document.getElementById("email").value;
+
+
+let lozinka =
+document.getElementById("lozinka").value;
+
 
 
 if(email=="" || lozinka==""){
 
+
 document.getElementById("poruka").innerHTML =
 "Unesi email i lozinku";
 
-}
 
-else {
-
-window.location.assign("./dashboard.html");
+return;
 
 }
 
+
+
+
+
+const {data,error} =
+await supabaseClient.auth.signInWithPassword({
+
+email: email,
+
+password: lozinka
+
+});
+
+
+
+
+
+if(error){
+
+
+document.getElementById("poruka").innerHTML =
+"Greška: " + error.message;
+
+
 }
+
+else{
+
+
+document.getElementById("poruka").innerHTML =
+"Uspešna prijava!";
+
+
+setTimeout(()=>{
+
+window.location.href="dashboard.html";
+
+},1000);
+
+
+}
+
+
+
+}
+
+
 
 </script>
+
 
 
 </body>
