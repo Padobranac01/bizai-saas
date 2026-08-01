@@ -68,19 +68,18 @@ Registracija uskoro.
 </section>
 
 
-
 <script>
 
 function prijava(){
 
-let email =
-document.getElementById("email").value;
+let email = document.getElementById("email").value;
+let lozinka = document.getElementById("lozinka").value;
 
 
-if(email==""){
+if(email=="" || lozinka==""){
 
 document.getElementById("poruka").innerHTML =
-"Unesi email";
+"Unesi email i lozinku";
 
 }
 
@@ -89,7 +88,6 @@ else {
 window.location.href = "dashboard.html";
 
 }
-
 
 }
 
