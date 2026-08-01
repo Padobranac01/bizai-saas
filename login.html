@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prijava - BizAI.rs</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>BizAI.rs</h1>
+
+<p>Prijava korisnika</p>
+
+</header>
+
+
+<section class="hero">
+
+
+<h2>Uloguj se</h2>
+
+
+<input 
+type="email" 
+placeholder="Email adresa"
+id="email"
+>
+
+
+<br><br>
+
+
+<input 
+type="password" 
+placeholder="Lozinka"
+id="lozinka"
+>
+
+
+<br><br>
+
+
+<button onclick="prijava()">
+Prijavi se
+</button>
+
+
+<p id="poruka"></p>
+
+
+<p>
+Nemaš nalog?
+Registracija uskoro.
+</p>
+
+
+</section>
+
+
+
+<script>
+
+function prijava(){
+
+let email =
+document.getElementById("email").value;
+
+
+if(email==""){
+
+document.getElementById("poruka").innerHTML =
+"Unesi email";
+
+}
+
+else {
+
+document.getElementById("poruka").innerHTML =
+"Uspešna prijava (test verzija)";
+
+}
+
+}
+
+</script>
+
+
+</body>
+
+</html>
