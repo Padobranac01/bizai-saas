@@ -2,41 +2,55 @@
 <html lang="sr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Registracija - BizAI.rs</title>
 
 <link rel="stylesheet" href="style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
+
 <body>
 
+
 <header>
+
 <h1>BizAI.rs</h1>
+
 <p>Kreiraj svoj nalog</p>
+
 </header>
+
 
 
 <section class="hero">
 
+
 <h2>Registracija</h2>
+
 
 <input 
 type="text"
 id="ime"
 placeholder="Ime i prezime">
 
+
 <br><br>
+
 
 <input 
 type="email"
 id="email"
-placeholder="Email">
+placeholder="Email adresa">
+
 
 <br><br>
+
 
 <input 
 type="password"
@@ -46,9 +60,13 @@ placeholder="Lozinka">
 
 <br><br>
 
+
 <button onclick="registracija()">
+
 Napravi nalog
+
 </button>
+
 
 
 <p id="poruka"></p>
@@ -57,53 +75,105 @@ Napravi nalog
 </section>
 
 
+
+
 <script>
 
+
+const SUPABASE_URL = "https://xczrbbjgayruabttxnyx.supabase.co";
+
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
+
+
 const supabaseClient = supabase.createClient(
-"OVDE_IDE_TVOJ_SUPABASE_URL",
-"OVDE_IDE_TVOJ_PUBLISHABLE_KEY"
+SUPABASE_URL,
+SUPABASE_KEY
 );
+
+
 
 
 async function registracija(){
 
+
 let ime =
 document.getElementById("ime").value;
 
+
 let email =
 document.getElementById("email").value;
+
 
 let lozinka =
 document.getElementById("lozinka").value;
 
 
-const { data, error } = await supabaseClient.auth.signUp({
+
+if(!email || !lozinka){
+
+document.getElementById("poruka").innerHTML =
+"Unesite email i lozinku.";
+
+return;
+
+}
+
+
+
+
+const {data,error} =
+await supabaseClient.auth.signUp({
 
 email: email,
 
 password: lozinka,
 
+
 options:{
+
 data:{
+
 name: ime
+
 }
+
 }
 
 });
 
 
+
+
+
 if(error){
 
+
 document.getElementById("poruka").innerHTML =
-error.message;
+"Greška: " + error.message;
+
 
 }
+
 
 else{
 
+
 document.getElementById("poruka").innerHTML =
-"Nalog uspešno napravljen! Proveri email.";
+"Nalog je napravljen! Proveri email za potvrdu.";
+
 
 }
 
+
+
 }
+
+
+
+</script>
+
+
+</body>
+
+</html>
