@@ -134,6 +134,7 @@ Ovde će se pojaviti tvoja ponuda.
 
 const SUPABASE_URL = "https://xczrbbjgayruabttxnyx.supabase.co";
 
+
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
 
 
@@ -145,6 +146,7 @@ SUPABASE_KEY
 
 
 let generisanaPonuda = "";
+
 
 
 
@@ -202,6 +204,7 @@ U cenu je uključena profesionalna realizacija i podrška.
 
 Hvala vam na ukazanom poverenju.
 
+
 Srdačan pozdrav,
 
 ${firma}
@@ -219,8 +222,10 @@ generisanaPonuda;
 
 
 
-async function sacuvajPonudu(){
 
+
+
+async function sacuvajPonudu(){
 
 
 const {data:{user}} =
@@ -252,12 +257,20 @@ return;
 
 
 
+let firma =
+document.getElementById("firma").value;
+
+
 let klijent =
 document.getElementById("klijent").value;
 
 
 let usluga =
 document.getElementById("usluga").value;
+
+
+let cena =
+document.getElementById("cena").value;
 
 
 let opis =
@@ -273,13 +286,15 @@ await supabaseClient
 
 user_id:user.id,
 
-client_name:klijent,
+firma:firma,
 
-service:usluga,
+klijent:klijent,
 
-description:opis,
+usluga:usluga,
 
-generated_offer:generisanaPonuda
+cena:cena,
+
+opis:opis
 
 });
 
@@ -291,7 +306,7 @@ if(error){
 console.log(error);
 
 alert(
-"Greška prilikom čuvanja."
+"Greška prilikom čuvanja: " + error.message
 );
 
 
