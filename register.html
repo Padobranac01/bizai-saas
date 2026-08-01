@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registracija - BizAI.rs</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+<h1>BizAI.rs</h1>
+<p>Kreiraj svoj nalog</p>
+</header>
+
+
+<section class="hero">
+
+<h2>Registracija</h2>
+
+<input 
+type="text"
+id="ime"
+placeholder="Ime i prezime">
+
+<br><br>
+
+<input 
+type="email"
+id="email"
+placeholder="Email">
+
+<br><br>
+
+<input 
+type="password"
+id="lozinka"
+placeholder="Lozinka">
+
+
+<br><br>
+
+<button onclick="registracija()">
+Napravi nalog
+</button>
+
+
+<p id="poruka"></p>
+
+
+</section>
+
+
+<script>
+
+function registracija(){
+
+let ime =
+document.getElementById("ime").value;
+
+let email =
+document.getElementById("email").value;
+
+
+if(ime=="" || email==""){
+
+document.getElementById("poruka").innerHTML =
+"Popuni sva polja";
+
+}
+
+else {
+
+document.getElementById("poruka").innerHTML =
+"Nalog će uskoro biti kreiran.";
+
+}
+
+}
+
+</script>
+
+
+</body>
+</html>
