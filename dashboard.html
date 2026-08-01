@@ -9,6 +9,7 @@
 <title>Moj nalog - BizAI.rs</title>
 
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
@@ -90,7 +91,39 @@ Napravi ponudu
 
 </footer>
 
+<script>
 
+const supabaseClient = supabase.createClient(
+"OVDE_TVOJ_PROJECT_URL",
+"OVDE_TVOJ_PUBLISHABLE_KEY"
+);
+
+
+async function proveriKorisnika(){
+
+const { data } = await supabaseClient.auth.getUser();
+
+
+if(!data.user){
+
+window.location.href = "login.html";
+
+}
+else{
+
+document.getElementById("pozdrav").innerHTML =
+"Zdravo, " + data.user.email + " 👋";
+
+}
+
+}
+
+
+proveriKorisnika();
+
+
+</script>
+  
 </body>
 
 </html>
