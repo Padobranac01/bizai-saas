@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sr">
+
 <head>
 
 <meta charset="UTF-8">
@@ -33,70 +34,51 @@
 <h2>Kreiraj ponudu za svog klijenta za nekoliko sekundi</h2>
 
 <p>
-Unesi osnovne podatke i napravi profesionalan dokument spreman za slanje.
+Unesi podatke i napravi profesionalnu poslovnu ponudu.
 </p>
 
 
 
 <label>Naziv tvoje firme:</label>
-
 <br>
 
-<input id="firma" 
-type="text" 
-placeholder="Naziv firme">
+<input id="firma" type="text" placeholder="Naziv firme">
 
 
 <br><br>
-
 
 
 <label>Ime klijenta:</label>
-
 <br>
 
-<input id="klijent" 
-type="text" 
-placeholder="Ime klijenta">
+<input id="klijent" type="text" placeholder="Ime klijenta">
 
 
 <br><br>
 
 
-
-<label>Usluga koju nudiš:</label>
-
+<label>Usluga:</label>
 <br>
 
-<input id="usluga" 
-type="text" 
-placeholder="Web sajt, marketing, dizajn...">
+<input id="usluga" type="text" placeholder="Izrada sajta, reklama...">
 
 
 <br><br>
 
 
-
-<label>Cena ponude:</label>
-
+<label>Cena:</label>
 <br>
 
-<input id="cena" 
-type="text" 
-placeholder="500 €">
+<input id="cena" type="text" placeholder="500 €">
 
 
 <br><br>
-
 
 
 <label>Opis usluge:</label>
-
 <br>
 
-<textarea id="opis"
-placeholder="Opiši šta klijent dobija..."></textarea>
-
+<textarea id="opis" placeholder="Opis šta klijent dobija..."></textarea>
 
 
 <br><br>
@@ -118,10 +100,9 @@ Sačuvaj ponudu
 
 <div id="rezultat" class="card">
 
-Ovde će se pojaviti tvoja ponuda.
+Ovde će se pojaviti ponuda.
 
 </div>
-
 
 
 </section>
@@ -129,16 +110,20 @@ Ovde će se pojaviti tvoja ponuda.
 
 
 
+
 <script>
 
 
-const SUPABASE_URL = "https://xczrbbjgayruabttxnyx.supabase.co";
+const SUPABASE_URL =
+"https://xczrbbjgayruabttxnyx.supabase.co";
 
 
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
+const SUPABASE_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
 
 
-const supabaseClient = supabase.createClient(
+const supabaseClient =
+supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
@@ -155,23 +140,23 @@ function napraviPonudu(){
 
 
 let firma =
-document.getElementById("firma").value;
+document.getElementById("firma").value.trim();
 
 
 let klijent =
-document.getElementById("klijent").value;
+document.getElementById("klijent").value.trim();
 
 
 let usluga =
-document.getElementById("usluga").value;
+document.getElementById("usluga").value.trim();
 
 
 let cena =
-document.getElementById("cena").value;
+document.getElementById("cena").value.trim();
 
 
 let opis =
-document.getElementById("opis").value;
+document.getElementById("opis").value.trim();
 
 
 
@@ -224,7 +209,6 @@ generisanaPonuda;
 
 
 
-
 async function sacuvajPonudu(){
 
 
@@ -235,9 +219,7 @@ await supabaseClient.auth.getUser();
 
 if(!user){
 
-alert(
-"Za čuvanje ponude morate biti prijavljeni."
-);
+alert("Morate biti prijavljeni.");
 
 return;
 
@@ -247,9 +229,7 @@ return;
 
 if(generisanaPonuda === ""){
 
-alert(
-"Prvo generišite ponudu."
-);
+alert("Prvo generišite ponudu.");
 
 return;
 
@@ -258,23 +238,24 @@ return;
 
 
 let firma =
-document.getElementById("firma").value;
+document.getElementById("firma").value.trim();
 
 
 let klijent =
-document.getElementById("klijent").value;
+document.getElementById("klijent").value.trim();
 
 
 let usluga =
-document.getElementById("usluga").value;
+document.getElementById("usluga").value.trim();
 
 
 let cena =
-document.getElementById("cena").value;
+document.getElementById("cena").value.trim();
 
 
 let opis =
-document.getElementById("opis").value;
+document.getElementById("opis").value.trim();
+
 
 
 
@@ -303,14 +284,16 @@ opis:opis
 
 if(error){
 
-console.log(error);
-
 alert(
-"Greška prilikom čuvanja: " + error.message
+"Greška: " + error.message
 );
 
+console.log(error);
 
-}else{
+
+}
+
+else{
 
 
 alert(
@@ -327,7 +310,6 @@ alert(
 
 
 </script>
-
 
 
 </body>
