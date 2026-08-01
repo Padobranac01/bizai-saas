@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,49 +9,94 @@
 
 <link rel="stylesheet" href="style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
+
 
 <body>
 
+
 <header>
+
 <h1>BizAI.rs</h1>
-<p>AI Generator poslovnih ponuda</p>
+
+<p>AI Generator profesionalnih poslovnih ponuda</p>
+
 </header>
+
 
 
 <section class="hero">
 
-<h2>Napravi profesionalnu ponudu za klijenta</h2>
+
+<h2>Kreiraj ponudu za svog klijenta za nekoliko sekundi</h2>
 
 <p>
-Popuni podatke i napravi gotov poslovni dokument.
+Unesi osnovne podatke i napravi profesionalan dokument spreman za slanje.
 </p>
 
 
-<label>Naziv firme:</label><br>
-<input id="firma" type="text" placeholder="Moja firma">
+
+<label>Naziv tvoje firme:</label>
+
+<br>
+
+<input id="firma" 
+type="text" 
+placeholder="Naziv firme">
+
 
 <br><br>
 
-<label>Ime klijenta:</label><br>
-<input id="klijent" type="text" placeholder="Ime klijenta">
+
+
+<label>Ime klijenta:</label>
+
+<br>
+
+<input id="klijent" 
+type="text" 
+placeholder="Ime klijenta">
+
 
 <br><br>
 
-<label>Usluga:</label><br>
-<input id="usluga" type="text" placeholder="Izrada sajta">
+
+
+<label>Usluga koju nudiš:</label>
+
+<br>
+
+<input id="usluga" 
+type="text" 
+placeholder="Web sajt, marketing, dizajn...">
+
 
 <br><br>
 
-<label>Cena:</label><br>
-<input id="cena" type="text" placeholder="500 €">
+
+
+<label>Cena ponude:</label>
+
+<br>
+
+<input id="cena" 
+type="text" 
+placeholder="500 €">
+
 
 <br><br>
 
-<label>Opis:</label><br>
 
-<textarea id="opis" 
-placeholder="Kratak opis usluge"></textarea>
+
+<label>Opis usluge:</label>
+
+<br>
+
+<textarea id="opis"
+placeholder="Opiši šta klijent dobija..."></textarea>
+
 
 
 <br><br>
@@ -61,57 +107,100 @@ Generiši ponudu
 </button>
 
 
-<h2>Rezultat:</h2>
+<button onclick="sacuvajPonudu()">
+Sačuvaj ponudu
+</button>
+
+
+
+<h2>Generisana ponuda:</h2>
+
 
 <div id="rezultat" class="card">
 
-Ovde će se pojaviti ponuda.
+Ovde će se pojaviti tvoja ponuda.
 
 </div>
+
 
 
 </section>
 
 
+
+
 <script>
 
+
+const SUPABASE_URL = "https://xczrbbjgayruabttxnyx.supabase.co";
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjenJiYmpnYXlydWFidHR4bnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDExODgsImV4cCI6MjEwMTE3NzE4OH0.NHsGGM2tmzcxFNb5fOK4Xbp3jJSPGkIEtcuy9AxJAlc";
+
+
+const supabaseClient = supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+let generisanaPonuda = "";
+
+
+
+
 function napraviPonudu(){
+
 
 let firma =
 document.getElementById("firma").value;
 
+
 let klijent =
 document.getElementById("klijent").value;
+
 
 let usluga =
 document.getElementById("usluga").value;
 
+
 let cena =
 document.getElementById("cena").value;
+
 
 let opis =
 document.getElementById("opis").value;
 
 
-let tekst = `
 
-POŠTOVANI ${klijent},
+generisanaPonuda = `
 
-Firma ${firma} vam predstavlja ponudu za uslugu:
+PONUDA ZA POSLOVNU SARADNJU
+
+
+Poštovani ${klijent},
+
+
+Kompanija ${firma} pripremila je za vas ponudu za uslugu:
+
 
 ${usluga}
 
 
-Opis usluge:
+Detalji usluge:
 
 ${opis}
 
 
-Ukupna cena ponude:
+Vrednost ponude:
+
 ${cena}
 
 
-Zahvaljujemo se na poverenju.
+U cenu je uključena profesionalna realizacija i podrška.
+
+
+Hvala vam na ukazanom poverenju.
 
 Srdačan pozdrav,
 
@@ -120,12 +209,112 @@ ${firma}
 `;
 
 
-document.getElementById("rezultat").innerText = tekst;
+
+document.getElementById("rezultat").innerText =
+generisanaPonuda;
+
 
 }
+
+
+
+
+async function sacuvajPonudu(){
+
+
+
+const {data:{user}} =
+await supabaseClient.auth.getUser();
+
+
+
+if(!user){
+
+alert(
+"Za čuvanje ponude morate biti prijavljeni."
+);
+
+return;
+
+}
+
+
+
+if(generisanaPonuda === ""){
+
+alert(
+"Prvo generišite ponudu."
+);
+
+return;
+
+}
+
+
+
+let klijent =
+document.getElementById("klijent").value;
+
+
+let usluga =
+document.getElementById("usluga").value;
+
+
+let opis =
+document.getElementById("opis").value;
+
+
+
+
+const {error} =
+await supabaseClient
+.from("offers")
+.insert({
+
+user_id:user.id,
+
+client_name:klijent,
+
+service:usluga,
+
+description:opis,
+
+generated_offer:generisanaPonuda
+
+});
+
+
+
+
+if(error){
+
+console.log(error);
+
+alert(
+"Greška prilikom čuvanja."
+);
+
+
+}else{
+
+
+alert(
+"Ponuda je uspešno sačuvana!"
+);
+
+
+}
+
+
+
+}
+
+
 
 </script>
 
 
+
 </body>
+
 </html>
